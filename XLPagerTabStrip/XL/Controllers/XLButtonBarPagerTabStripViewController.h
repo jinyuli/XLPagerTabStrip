@@ -28,6 +28,6 @@
 
 @interface XLButtonBarPagerTabStripViewController : XLPagerTabStripViewController
 
-@property (readonly, nonatomic) XLButtonBarView * buttonBarView;
+@property (readonly, nonatomic, weak) XLButtonBarView * buttonBarView;
 
 @end

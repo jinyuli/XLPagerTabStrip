@@ -28,7 +28,7 @@
 
 @interface XLButtonBarPagerTabStripViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
-@property (nonatomic) IBOutlet XLButtonBarView * buttonBarView;
+@property (nonatomic, weak) IBOutlet XLButtonBarView * buttonBarView;
 @property (nonatomic) BOOL shouldUpdateButtonBarView;
 
 @end
@@ -104,7 +104,9 @@
     UICollectionViewFlowLayout * flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
     [flowLayout setSectionInset:UIEdgeInsetsMake(0, 35, 0, 35)];
-    _buttonBarView = [[XLButtonBarView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0f) collectionViewLayout:flowLayout];
+    XLButtonBarView *barView = [[XLButtonBarView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0f) collectionViewLayout:flowLayout];
+    [self.view addSubview:barView];
+    _buttonBarView = barView;
     _buttonBarView.backgroundColor = [UIColor orangeColor];
     _buttonBarView.selectedBar.backgroundColor = [UIColor blackColor];
     _buttonBarView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -150,6 +152,21 @@
     CGSize labelSize = [label intrinsicContentSize];
     
     return CGSizeMake(labelSize.width + (self.buttonBarView.leftRightMargin * 2), collectionView.frame.size.height);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsZero;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 0;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 0;
 }
 
 #pragma mark - UICollectionViewDelegate
